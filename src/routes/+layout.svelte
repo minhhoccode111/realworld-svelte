@@ -5,6 +5,7 @@
 	import PreloadingIndicator from './PreloadingIndicator.svelte';
 
 	const { children } = $props();
+	import { Toaster } from 'svelte-sonner';
 </script>
 
 <svelte:head>
@@ -14,6 +15,8 @@
 {#if navigating.from}
 	<PreloadingIndicator />
 {/if}
+
+<Toaster position="bottom-right" expand={true} richColors closeButton />
 
 <Nav />
 

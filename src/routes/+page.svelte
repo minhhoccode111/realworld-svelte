@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-	<title>Conduit</title>
+	<title>Home | Conduit</title>
 </svelte:head>
 
 <div class="home-page">
