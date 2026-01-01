@@ -69,6 +69,7 @@
 							<a href="/?tag={tag}" class="tag-default tag-pill">{tag}</a>
 						{/each}
 					</div>
+					<a href="/test-preloader" class="btn btn-primary mt-3">Test Preloader</a>
 				</div>
 			</div>
 		</div>

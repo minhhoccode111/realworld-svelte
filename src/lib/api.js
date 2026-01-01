@@ -5,6 +5,7 @@ import { safeParse } from './utils';
 const base = 'http://localhost:8080/api/v1';
 
 async function send({ method, path, data, token }) {
+	await new Promise((res) => setTimeout(res, 3000));
 	const opts = { method, headers: {} };
 
 	if (data) {
