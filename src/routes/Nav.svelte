@@ -25,6 +25,7 @@
 
 				<li class="nav-item">
 					<a href="/profile/@{page.data.user.username}" class="nav-link">
+						<img src={page.data.user.image} class="user-pic" alt={page.data.user.username} />
 						{page.data.user.username}
 					</a>
 				</li>
