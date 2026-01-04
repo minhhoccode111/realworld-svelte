@@ -3,6 +3,8 @@
 	import ListErrors from '$lib/ListErrors.svelte';
 
 	const { form } = $props();
+	const f = $derived(form);
+	$inspect(f);
 </script>
 
 <svelte:head>
@@ -18,9 +20,19 @@
 					<a href="/register">Need an account?</a>
 				</p>
 
-				<ListErrors errors={form?.errors} />
+				<ListErrors errors={form?.error} />
 
-				<form use:enhance method="POST">
+				<form
+					method="POST"
+					use:enhance={(o) => {
+						console.log('o', o);
+						return async ({ result }) => {
+							if (result.type === 'success') {
+								await update();
+							}
+						};
+					}}
+				>
 					<fieldset class="form-group">
 						<input
 							class="form-control form-control-lg"
