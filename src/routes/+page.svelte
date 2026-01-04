@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-	<title>Home | Conduit</title>
+	<title>Conduit</title>
 </svelte:head>
 
 <div class="home-page">
@@ -69,7 +69,6 @@
 							<a href="/?tag={tag}" class="tag-default tag-pill">{tag}</a>
 						{/each}
 					</div>
-					<a href="/test-preloader" class="btn btn-primary mt-3">Test Preloader</a>
 				</div>
 			</div>
 		</div>

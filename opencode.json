@@ -2,8 +2,8 @@
 	"$schema": "https://opencode.ai/config.json",
 	"mcp": {
 		"svelte": {
-			"type": "remote",
-			"url": "https://mcp.svelte.dev/mcp"
+			"type": "local",
+			"command": ["npx", "-y", "@sveltejs/mcp"]
 		}
 	}
 }

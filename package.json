@@ -23,8 +23,5 @@
 		"typescript": "^5.9.3",
 		"vite": "^7.1.12"
 	},
-	"packageManager": "pnpm@10.20.0",
-	"dependencies": {
-		"svelte-sonner": "^1.0.7"
-	}
+	"packageManager": "pnpm@10.20.0"
 }

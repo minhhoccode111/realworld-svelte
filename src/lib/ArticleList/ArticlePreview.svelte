@@ -2,9 +2,6 @@
 	import { enhance } from '$app/forms';
 
 	const { article, user } = $props();
-	let favorited = $state(article.favorited);
-	let favoritesCount = $state(article.favoritesCount);
-	let loading = $state(false);
 </script>
 
 <div class="article-preview">
@@ -12,38 +9,40 @@
 		<a href="/profile/@{article.author.username}">
 			<img src={article.author.image} alt={article.author.username} />
 		</a>
+
 		<div class="info">
 			<a class="author" href="/profile/@{article.author.username}">{article.author.username}</a>
 			<span class="date">{new Date(article.createdAt).toDateString()}</span>
 		</div>
+
 		{#if user}
 			<form
 				method="POST"
 				action="/article/{article.slug}?/toggleFavorite"
-				use:enhance={() => {
-					loading = true;
-					// optimistic UI - now mutating local state
-					if (favorited) {
-						favorited = false;
-						favoritesCount -= 1;
+				use:enhance={({ form }) => {
+					// optimistic UI
+					if (article.favorited) {
+						article.favorited = false;
+						article.favoritesCount -= 1;
 					} else {
-						favorited = true;
-						favoritesCount += 1;
+						article.favorited = true;
+						article.favoritesCount += 1;
 					}
+
+					const button = form.querySelector('button');
+					button.disabled = true;
+
 					return ({ result, update }) => {
+						button.disabled = false;
 						if (result.type === 'error') update();
-						loading = false;
 					};
 				}}
 				class="pull-xs-right"
 			>
-				<input hidden type="checkbox" name="favorited" checked={favorited} />
-				<button
-					class="btn btn-sm {favorited ? 'btn-primary' : 'btn-outline-primary'}"
-					disabled={loading}
-				>
+				<input hidden type="checkbox" name="favorited" checked={article.favorited} />
+				<button class="btn btn-sm {article.favorited ? 'btn-primary' : 'btn-outline-primary'}">
 					<i class="ion-heart"></i>
-					{favoritesCount}
+					{article.favoritesCount}
 				</button>
 			</form>
 		{/if}
