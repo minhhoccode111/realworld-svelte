@@ -10,17 +10,15 @@ export async function load({ locals }) {
 export const actions = {
 	default: async ({ cookies, request }) => {
 		const data = await request.formData();
-		const email = data.get('email');
-		const password = data.get('password');
 
 		const body = await api.post('users/login', {
 			user: {
-				email,
-				password
+				email: data.get('email'),
+				password: data.get('password')
 			}
 		});
 
-		if (body.error) {
+		if (body.errors) {
 			return fail(401, body);
 		}
 
