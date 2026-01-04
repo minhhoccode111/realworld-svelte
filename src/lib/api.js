@@ -1,6 +1,4 @@
-import { error } from '@sveltejs/kit';
-
-const base = 'https://api.realworld.show/api';
+const base = 'http://localhost:8080/api/v1';
 
 async function send({ method, path, data, token }) {
 	const opts = { method, headers: {} };
@@ -15,12 +13,8 @@ async function send({ method, path, data, token }) {
 	}
 
 	const res = await fetch(`${base}/${path}`, opts);
-	if (res.ok || res.status === 422) {
-		const text = await res.text();
-		return text ? JSON.parse(text) : {};
-	}
-
-	error(res.status);
+	const text = await res.text();
+	return text ? JSON.parse(text) : {};
 }
 
 export function get(path, token) {

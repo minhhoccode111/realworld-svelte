@@ -1,7 +1,9 @@
 <script>
 	import { enhance } from '$app/forms';
 
-	const { article, user } = $props();
+	const { article: initialArticle, user } = $props();
+	let loading = $state(false);
+	let article = $state({ ...initialArticle });
 </script>
 
 <div class="article-preview">
@@ -19,7 +21,8 @@
 			<form
 				method="POST"
 				action="/article/{article.slug}?/toggleFavorite"
-				use:enhance={({ form }) => {
+				use:enhance={() => {
+					loading = true;
 					// optimistic UI
 					if (article.favorited) {
 						article.favorited = false;
@@ -29,20 +32,24 @@
 						article.favoritesCount += 1;
 					}
 
-					const button = form.querySelector('button');
-					button.disabled = true;
-
 					return ({ result, update }) => {
-						button.disabled = false;
+						loading = false;
 						if (result.type === 'error') update();
 					};
 				}}
 				class="pull-xs-right"
 			>
 				<input hidden type="checkbox" name="favorited" checked={article.favorited} />
-				<button class="btn btn-sm {article.favorited ? 'btn-primary' : 'btn-outline-primary'}">
+				<button
+					disabled={loading}
+					class="btn btn-sm {article.favorited ? 'btn-primary' : 'btn-outline-primary'}"
+				>
 					<i class="ion-heart"></i>
-					{article.favoritesCount}
+					{#if loading}
+						...
+					{:else}
+						{article.favoritesCount}
+					{/if}
 				</button>
 			</form>
 		{/if}

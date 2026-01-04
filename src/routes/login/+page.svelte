@@ -1,6 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
 	import ListErrors from '$lib/ListErrors.svelte';
+	import { toast } from 'svelte-sonner';
 
 	const { form } = $props();
 </script>
@@ -18,9 +19,20 @@
 					<a href="/register">Need an account?</a>
 				</p>
 
+				<!--TODO: display error properly-->
 				<ListErrors errors={form?.errors} />
 
-				<form use:enhance method="POST">
+				<form
+					method="POST"
+					use:enhance={() => {
+						return ({ result, update }) => {
+							if (result.type === 'failure') {
+								toast.error(result.data.error);
+								update();
+							}
+						};
+					}}
+				>
 					<fieldset class="form-group">
 						<input
 							class="form-control form-control-lg"

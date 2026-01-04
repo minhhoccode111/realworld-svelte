@@ -18,10 +18,11 @@ export const actions = {
 			}
 		});
 
-		if (body.errors) {
+		if (body.error || !body.user) {
 			return fail(401, body);
 		}
 
+		// TODO: redirect in a way that we can handle the event and show a greeting message for logged-in user
 		const value = btoa(JSON.stringify(body.user));
 		cookies.set('jwt', value, { path: '/' });
 
